@@ -47,6 +47,10 @@ git commit -m "Actualizacion de algo"
 ```
 git push -u origin master
 ```
+- Como ver el estado de nuestro repositorio local
+```
+git status
+```
 
 ------
 #### Ejemplo
