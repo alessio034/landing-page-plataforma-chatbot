@@ -5,132 +5,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Cuadrícula tipo "circuito" con brillo neón */
+        .fondo-cuadricula {
+            background-image:
+                linear-gradient(rgb(34 211 238 / 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgb(34 211 238 / 0.07) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
+        }
+
+        /* Resplandor neón (con filter, porque text-shadow se vería a través del texto degradado) */
+        .texto-neon {
+            filter: drop-shadow(0 0 12px rgb(34 211 238 / 0.5)) drop-shadow(0 0 28px rgb(217 70 239 / 0.35));
+        }
+
+        /* Movimiento suave de los brillos y las burbujas */
+        @keyframes flotar {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -40px) scale(1.08); }
+        }
+        @keyframes subir {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+        .animar-flotar { animation: flotar 18s ease-in-out infinite; }
+        .animar-subir { animation: subir 6s ease-in-out infinite; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animar-flotar, .animar-subir { animation: none; }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <header class="py-16 px-4 text-center">
-        <h1 class="text-4xl font-bold text-slate-900">Bienvenido a Git & Github</h1>
-        <p class="mt-4 text-lg text-slate-600">En esta landing page encontraras mis servicios de Chatbot</p>
+<body class="relative min-h-screen bg-slate-950 text-slate-300 antialiased">
+    <!-- Fondo decorativo (fijo, detrás de todo el contenido) -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <!-- Brillos neón difuminados -->
+        <div class="animar-flotar absolute -top-40 -left-32 h-[30rem] w-[30rem] rounded-full bg-cyan-500/20 blur-3xl"></div>
+        <div class="animar-flotar absolute top-1/3 -right-40 h-[32rem] w-[32rem] rounded-full bg-fuchsia-600/20 blur-3xl" style="animation-delay: -6s"></div>
+        <div class="animar-flotar absolute -bottom-40 left-1/4 h-[28rem] w-[28rem] rounded-full bg-violet-600/20 blur-3xl" style="animation-delay: -12s"></div>
+
+        <!-- Cuadrícula -->
+        <div class="fondo-cuadricula absolute inset-0"></div>
+
+        <!-- Burbujas de chat decorativas con brillo -->
+        <svg class="animar-subir absolute top-24 left-[8%] hidden h-16 w-16 text-cyan-400/40 drop-shadow-[0_0_12px_rgb(34_211_238)] md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        </svg>
+        <svg class="animar-subir absolute top-40 right-[10%] hidden h-12 w-12 text-fuchsia-400/40 drop-shadow-[0_0_12px_rgb(232_121_249)] md:block" style="animation-delay: -2s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M20 3H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11l5 4v-4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+        </svg>
+        <svg class="animar-subir absolute top-[60%] left-[4%] hidden h-10 w-10 text-violet-400/40 drop-shadow-[0_0_12px_rgb(167_139_250)] lg:block" style="animation-delay: -4s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        </svg>
+    </div>
+
+    <header class="py-20 px-4 text-center">
+        <span class="inline-flex items-center gap-2 rounded-full bg-cyan-400/10 px-4 py-1.5 text-sm font-medium text-cyan-300 ring-1 ring-cyan-400/30 backdrop-blur">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgb(52_211_153)] animate-pulse"></span>
+            Chatbots con inteligencia artificial
+        </span>
+        <h1 class="mt-6 text-4xl md:text-5xl font-bold text-white">
+            Bienvenido a <span class="texto-neon bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">Git & Github</span>
+        </h1>
+        <p class="mt-4 text-lg text-slate-400">En esta landing page encontraras mis servicios de Chatbot</p>
     </header>
 
     <!-- Sección de precios -->
     <section id="precios" class="py-20 px-4">
         <div class="max-w-6xl mx-auto">
             <div class="text-center max-w-2xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Planes y precios</h2>
-                <p class="mt-4 text-slate-600">Elige el plan que mejor se adapte a tu negocio. Sin contratos, cancela cuando quieras.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Planes y precios</h2>
+                <p class="mt-4 text-slate-400">Elige el plan que mejor se adapte a tu negocio. Sin contratos, cancela cuando quieras.</p>
             </div>
 
             <div class="mt-12 grid gap-8 md:grid-cols-3 items-stretch">
                 <!-- Plan Básico -->
-                <div class="flex flex-col rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-lg">
-                    <h3 class="text-lg font-semibold text-slate-900">Básico</h3>
-                    <p class="mt-2 text-sm text-slate-500">Ideal para emprendedores que están empezando.</p>
+                <div class="flex flex-col rounded-2xl bg-white/5 p-8 ring-1 ring-white/10 backdrop-blur transition hover:-translate-y-1 hover:ring-cyan-400/50 hover:shadow-[0_0_30px_rgb(34_211_238/0.25)]">
+                    <h3 class="text-lg font-semibold text-white">Básico</h3>
+                    <p class="mt-2 text-sm text-slate-400">Ideal para emprendedores que están empezando.</p>
                     <p class="mt-6 flex items-baseline gap-1">
-                        <span class="text-4xl font-bold text-slate-900">$19</span>
-                        <span class="text-slate-500">/mes</span>
+                        <span class="text-4xl font-bold text-white">$19</span>
+                        <span class="text-slate-400">/mes</span>
                     </p>
-                    <ul class="mt-8 space-y-3 text-sm text-slate-600 flex-1">
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> 1 chatbot</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> 1.000 mensajes al mes</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Integración con sitio web</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Soporte por correo</li>
+                    <ul class="mt-8 space-y-3 text-sm text-slate-300 flex-1">
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> 1 chatbot</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> 1.000 mensajes al mes</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Integración con sitio web</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Soporte por correo</li>
                     </ul>
-                    <a href="#" class="mt-8 block rounded-lg border border-indigo-600 px-4 py-2.5 text-center font-semibold text-indigo-600 transition hover:bg-indigo-50">Comenzar</a>
+                    <a href="#" class="mt-8 block rounded-lg border border-cyan-400/60 px-4 py-2.5 text-center font-semibold text-cyan-300 transition hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgb(34_211_238/0.4)]">Comenzar</a>
                 </div>
 
                 <!-- Plan Pro (destacado) -->
-                <div class="relative flex flex-col rounded-2xl bg-indigo-600 p-8 text-white shadow-xl ring-2 ring-indigo-600 md:scale-105">
-                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-slate-900">Más popular</span>
+                <div class="relative flex flex-col rounded-2xl bg-gradient-to-b from-fuchsia-600/30 to-violet-900/30 p-8 text-white ring-2 ring-fuchsia-500/70 shadow-[0_0_40px_rgb(217_70_239/0.35)] backdrop-blur md:scale-105">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-3 py-1 text-xs font-semibold text-slate-950 shadow-[0_0_16px_rgb(217_70_239/0.6)]">Más popular</span>
                     <h3 class="text-lg font-semibold">Pro</h3>
-                    <p class="mt-2 text-sm text-indigo-100">Para negocios en crecimiento que necesitan más.</p>
+                    <p class="mt-2 text-sm text-fuchsia-100/80">Para negocios en crecimiento que necesitan más.</p>
                     <p class="mt-6 flex items-baseline gap-1">
                         <span class="text-4xl font-bold">$49</span>
-                        <span class="text-indigo-200">/mes</span>
+                        <span class="text-fuchsia-200/70">/mes</span>
                     </p>
-                    <ul class="mt-8 space-y-3 text-sm text-indigo-50 flex-1">
-                        <li class="flex gap-2"><span class="font-bold">✓</span> 3 chatbots</li>
-                        <li class="flex gap-2"><span class="font-bold">✓</span> 10.000 mensajes al mes</li>
-                        <li class="flex gap-2"><span class="font-bold">✓</span> Integración con WhatsApp e Instagram</li>
-                        <li class="flex gap-2"><span class="font-bold">✓</span> Estadísticas de conversaciones</li>
-                        <li class="flex gap-2"><span class="font-bold">✓</span> Soporte prioritario</li>
+                    <ul class="mt-8 space-y-3 text-sm text-slate-100 flex-1">
+                        <li class="flex gap-2"><span class="text-fuchsia-400 font-bold">✓</span> 3 chatbots</li>
+                        <li class="flex gap-2"><span class="text-fuchsia-400 font-bold">✓</span> 10.000 mensajes al mes</li>
+                        <li class="flex gap-2"><span class="text-fuchsia-400 font-bold">✓</span> Integración con WhatsApp e Instagram</li>
+                        <li class="flex gap-2"><span class="text-fuchsia-400 font-bold">✓</span> Estadísticas de conversaciones</li>
+                        <li class="flex gap-2"><span class="text-fuchsia-400 font-bold">✓</span> Soporte prioritario</li>
                     </ul>
-                    <a href="#" class="mt-8 block rounded-lg bg-white px-4 py-2.5 text-center font-semibold text-indigo-600 transition hover:bg-indigo-50">Elegir Pro</a>
+                    <a href="#" class="mt-8 block rounded-lg bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-4 py-2.5 text-center font-semibold text-slate-950 transition hover:brightness-110 hover:shadow-[0_0_24px_rgb(217_70_239/0.6)]">Elegir Pro</a>
                 </div>
 
                 <!-- Plan Empresa -->
-                <div class="flex flex-col rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-lg">
-                    <h3 class="text-lg font-semibold text-slate-900">Empresa</h3>
-                    <p class="mt-2 text-sm text-slate-500">Soluciones a medida para grandes equipos.</p>
+                <div class="flex flex-col rounded-2xl bg-white/5 p-8 ring-1 ring-white/10 backdrop-blur transition hover:-translate-y-1 hover:ring-cyan-400/50 hover:shadow-[0_0_30px_rgb(34_211_238/0.25)]">
+                    <h3 class="text-lg font-semibold text-white">Empresa</h3>
+                    <p class="mt-2 text-sm text-slate-400">Soluciones a medida para grandes equipos.</p>
                     <p class="mt-6 flex items-baseline gap-1">
-                        <span class="text-4xl font-bold text-slate-900">$99</span>
-                        <span class="text-slate-500">/mes</span>
+                        <span class="text-4xl font-bold text-white">$99</span>
+                        <span class="text-slate-400">/mes</span>
                     </p>
-                    <ul class="mt-8 space-y-3 text-sm text-slate-600 flex-1">
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Chatbots ilimitados</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Mensajes ilimitados</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Integraciones personalizadas (API)</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Entrenamiento con tus datos</li>
-                        <li class="flex gap-2"><span class="text-indigo-600 font-bold">✓</span> Soporte 24/7 dedicado</li>
+                    <ul class="mt-8 space-y-3 text-sm text-slate-300 flex-1">
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Chatbots ilimitados</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Mensajes ilimitados</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Integraciones personalizadas (API)</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Entrenamiento con tus datos</li>
+                        <li class="flex gap-2"><span class="text-cyan-400 font-bold">✓</span> Soporte 24/7 dedicado</li>
                     </ul>
-                    <a href="#" class="mt-8 block rounded-lg border border-indigo-600 px-4 py-2.5 text-center font-semibold text-indigo-600 transition hover:bg-indigo-50">Contactar ventas</a>
+                    <a href="#" class="mt-8 block rounded-lg border border-cyan-400/60 px-4 py-2.5 text-center font-semibold text-cyan-300 transition hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgb(34_211_238/0.4)]">Contactar ventas</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Sección de galería -->
-    <section id="galeria" class="py-20 px-4 bg-white">
+    <section id="galeria" class="py-20 px-4 bg-slate-900/40 border-y border-white/5 backdrop-blur-sm">
         <div class="max-w-6xl mx-auto">
             <div class="text-center max-w-2xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Galería</h2>
-                <p class="mt-4 text-slate-600">Algunos de los chatbots que he creado para negocios de distintos sectores.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Galería</h2>
+                <p class="mt-4 text-slate-400">Algunos de los chatbots que he creado para negocios de distintos sectores.</p>
             </div>
 
             <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-cyan-400/60 hover:shadow-[0_0_30px_rgb(34_211_238/0.3)]">
                     <img src="https://picsum.photos/seed/tienda/600/400" alt="Chatbot para tienda online" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">E-commerce</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-cyan-300">E-commerce</span>
                         <h3 class="mt-1 text-lg font-semibold">Asistente de ventas</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-fuchsia-400/60 hover:shadow-[0_0_30px_rgb(217_70_239/0.3)]">
                     <img src="https://picsum.photos/seed/restaurante/600/400" alt="Chatbot para restaurante" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Restaurantes</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-fuchsia-300">Restaurantes</span>
                         <h3 class="mt-1 text-lg font-semibold">Reservas por WhatsApp</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-violet-400/60 hover:shadow-[0_0_30px_rgb(167_139_250/0.3)]">
                     <img src="https://picsum.photos/seed/clinica/600/400" alt="Chatbot para clínica" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Salud</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-violet-300">Salud</span>
                         <h3 class="mt-1 text-lg font-semibold">Agenda de citas médicas</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-cyan-400/60 hover:shadow-[0_0_30px_rgb(34_211_238/0.3)]">
                     <img src="https://picsum.photos/seed/inmobiliaria/600/400" alt="Chatbot para inmobiliaria" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Inmobiliaria</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Inmobiliaria</span>
                         <h3 class="mt-1 text-lg font-semibold">Calificación de clientes</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-fuchsia-400/60 hover:shadow-[0_0_30px_rgb(217_70_239/0.3)]">
                     <img src="https://picsum.photos/seed/academia/600/400" alt="Chatbot para academia" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Educación</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-fuchsia-300">Educación</span>
                         <h3 class="mt-1 text-lg font-semibold">Tutor virtual 24/7</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <figure class="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition hover:ring-violet-400/60 hover:shadow-[0_0_30px_rgb(167_139_250/0.3)]">
                     <img src="https://picsum.photos/seed/soporte/600/400" alt="Chatbot de soporte técnico" loading="lazy" class="h-64 w-full object-cover transition duration-500 group-hover:scale-110">
-                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent p-6 text-white">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Tecnología</span>
+                    <figcaption class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-6 text-white">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-violet-300">Tecnología</span>
                         <h3 class="mt-1 text-lg font-semibold">Soporte técnico automático</h3>
                     </figcaption>
                 </figure>
