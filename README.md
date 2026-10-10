@@ -10,19 +10,22 @@ Git init
 ## Paso 2
 - Enviar los nuevos archivos o archivos modificados al area de preparacion
 ```
+Un Solo archivo en especifico
 git add index.html
+
+Todos los archivos
 git add .
 ```
 - El area de preparacion es donde se preparan los cambios pendientes
 
-## Paso 2
+## Paso 3
 -Registrar un cambio realizado
 ```
 git commit -m "Proyecto base"
 ```
 -
 
-# Githab
+# Paso 4 Githab
 - Une nuestro Git Local a Github
 ```
 git remote add origin https://github.com/alessio034/landing-page-plataforma-chatbot.git
@@ -32,7 +35,18 @@ git remote add origin https://github.com/alessio034/landing-page-plataforma-chat
 git push -u origin master
 ```
 
+## Paso 5
+- Actualizar archivos en Github
 
+```
+git add .
+```
+```
+git commit -m "Actualizacion de algo"
+```
+```
+git push -u origin master
+```
 
 ------
 #### Ejemplo
